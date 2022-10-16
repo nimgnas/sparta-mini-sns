@@ -37,7 +37,7 @@ export const __deleteComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios.delete(`${URL}/${payload}`);
-      return thunkAPI.fulfillWithValue();
+      return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -59,6 +59,40 @@ export const __updateComment = createAsyncThunk(
   }
 );
 
+// reducer 함수
+const pendingReducer = (state) => {
+  state.isLoading = true;
+};
+
+const fulfilledReducer = (state, action) => {
+  const getIndex = (id) => {
+    return state.comments.findIndex((comment) => comment.id === id);
+  };
+
+  switch (action.type) {
+    case "comments/getComments/fulfilled":
+      state.comments = action.payload;
+      break;
+    case "comments/addComment/fulfilled":
+      state.comments.push(action.payload);
+      break;
+    case "comments/deleteComment/fulfilled":
+      state.comments.splice(getIndex(action.payload), 1);
+      break;
+    case "comments/updateComment/fulfilled":
+      state.comments.splice(getIndex(action.payload.id), 1, action.payload);
+      break;
+    default:
+      return state;
+  }
+  state.isLoading = false;
+};
+
+const rejectedReducer = (state, { payload }) => {
+  state.error = payload;
+  state.isLoading = false;
+};
+
 // TODO: reducer 리팩토링
 const commentsSlice = createSlice({
   name: "comments",
@@ -69,55 +103,21 @@ const commentsSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [__getComments.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getComments.fulfilled]: (state, { payload }) => {
-      state.comments = payload;
-      state.isLoading = false;
-    },
-    [__getComments.rejected]: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
+    [__getComments.pending]: pendingReducer,
+    [__getComments.fulfilled]: fulfilledReducer,
+    [__getComments.rejected]: rejectedReducer,
 
-    [__addComment.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__addComment.fulfilled]: (state, { payload }) => {
-      state.comments.push(payload);
-      state.isLoading = false;
-    },
-    [__addComment.rejected]: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
+    [__addComment.pending]: pendingReducer,
+    [__addComment.fulfilled]: fulfilledReducer,
+    [__addComment.rejected]: rejectedReducer,
 
-    [__deleteComment.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__deleteComment.fulfilled]: (state) => {
-      state.isLoading = false;
-    },
-    [__deleteComment.rejected]: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
+    [__deleteComment.pending]: pendingReducer,
+    [__deleteComment.fulfilled]: fulfilledReducer,
+    [__deleteComment.rejected]: rejectedReducer,
 
-    [__updateComment.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__updateComment.fulfilled]: (state, { payload }) => {
-      const index = state.comments.findIndex(
-        (comment) => comment.id === payload.id
-      );
-      state.comments.splice(index, 1, payload);
-      state.isLoading = false;
-    },
-    [__updateComment.rejected]: (state, { payload }) => {
-      state.error = payload;
-      state.isLoading = false;
-    },
+    [__updateComment.pending]: pendingReducer,
+    [__updateComment.fulfilled]: fulfilledReducer,
+    [__updateComment.rejected]: rejectedReducer,
   },
 });
 

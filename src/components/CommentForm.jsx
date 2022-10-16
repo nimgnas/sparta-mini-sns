@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ButtonComment from "./ButtonComment";
 import useInputs from "./useInputs";
@@ -24,6 +24,12 @@ function CommentForm({ submitFn, initialState, btnName }) {
     userName: initialState?.userName || "",
     body: initialState?.body || "",
   });
+  const [spaceCheck, setSpaceCheck] = useState(true);
+
+  useEffect(() => {
+    if (!userName || !body) setSpaceCheck(true);
+    else setSpaceCheck(false);
+  }, [spaceCheck, body, userName]);
 
   const onSubmitComment = (e) => {
     e.preventDefault();
@@ -44,7 +50,7 @@ function CommentForm({ submitFn, initialState, btnName }) {
         placeholder="코멘트를 입력 해주세요"
         onChange={onChange}
       ></CommentInput>
-      <ButtonComment>{btnName}</ButtonComment>
+      <ButtonComment disabled={spaceCheck}>{btnName}</ButtonComment>
     </CommentFormWrapper>
   );
 }

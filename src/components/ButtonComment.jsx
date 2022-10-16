@@ -11,7 +11,7 @@ const Button = styled.button`
   border: 1px solid ${(props) => props.color};
 `;
 
-function ButtonComment({ children }) {
+function ButtonComment({ children, disabled }) {
   const getColor = (btnname) => {
     switch (btnname) {
       case "등록":
@@ -23,7 +23,11 @@ function ButtonComment({ children }) {
     }
   };
 
-  return <Button color={getColor(children)}>{children}</Button>;
+  return (
+    <Button disabled={disabled} color={getColor(children)}>
+      {children}
+    </Button>
+  );
 }
 
 export default ButtonComment;
