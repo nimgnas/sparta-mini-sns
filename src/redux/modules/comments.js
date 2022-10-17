@@ -93,7 +93,6 @@ const rejectedReducer = (state, { payload }) => {
   state.isLoading = false;
 };
 
-// TODO: reducer 리팩토링
 const commentsSlice = createSlice({
   name: "comments",
   initialState: {

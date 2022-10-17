@@ -41,7 +41,6 @@ const CommentList = styled.div``;
 function Detail() {
   const { comments, isLoading } = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(isLoading);
 
   // TODO: comment 작성시 스크롤 맨밑으로
 

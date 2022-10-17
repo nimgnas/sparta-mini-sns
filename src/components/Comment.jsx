@@ -44,7 +44,6 @@ function Comment({ id, userName, body }) {
   const [updateCheck, setUpdateCheck] = useState(false);
 
   const dispatch = useDispatch();
-  // TODO: 삭제 후 리렌더링 방식 생각
   const onDeleteClick = () => {
     dispatch(__deleteComment(id));
   };

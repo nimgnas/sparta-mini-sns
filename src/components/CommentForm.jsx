@@ -39,16 +39,20 @@ function CommentForm({ submitFn, initialState, btnName }) {
   return (
     <CommentFormWrapper onSubmit={onSubmitComment}>
       <CommentNameInput
+        type="text"
         name="userName"
         value={userName}
         placeholder="닉네임"
         onChange={onChange}
+        maxLength={3}
       ></CommentNameInput>
       <CommentInput
+        type="text"
         name="body"
         value={body}
         placeholder="코멘트를 입력 해주세요"
         onChange={onChange}
+        maxLength={40}
       ></CommentInput>
       <ButtonComment disabled={spaceCheck}>{btnName}</ButtonComment>
     </CommentFormWrapper>
