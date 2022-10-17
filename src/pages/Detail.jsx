@@ -39,7 +39,7 @@ const LikeButton = styled.h3`
 const CommentList = styled.div``;
 
 function Detail() {
-  const { comments, isLoading } = useSelector((state) => state);
+  const { comments, isLoading } = useSelector((state) => state.commentReducer);
   const dispatch = useDispatch();
 
   // TODO: comment 작성시 스크롤 맨밑으로
@@ -71,12 +71,12 @@ function Detail() {
         <CommentForm submitFn={onSubmitComment} btnName="등록" />
         <CommentList>
           {!isLoading &&
-            comments.map((comment) => (
+            comments?.map((comment) => (
               <Comment
-                key={comment.id}
-                id={comment.id}
-                userName={comment.userName}
-                body={comment.body}
+                key={comment?.id}
+                id={comment?.id}
+                userName={comment?.userName}
+                body={comment?.body}
               />
             ))}
         </CommentList>
