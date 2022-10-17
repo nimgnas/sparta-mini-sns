@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createGlobalStyle } from "styled-components";
+import { Provider } from "react-redux";
+import store from "./redux/config/configStore";
 import App from "./App";
 import {Provider} from "react-redux"
 import store from "./redux/config/configStore";
@@ -61,10 +63,10 @@ table {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
-	<Provider store={store}>
-		<App />
-		<GlobalStyles />
-	</Provider>
-  </>
+
+  <Provider store={store}>
+    <App />
+    <GlobalStyles />
+  </Provider>
+
 );
