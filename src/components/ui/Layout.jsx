@@ -16,6 +16,7 @@ function Layout({ children }) {
       <LayoutContainer>{children}</LayoutContainer>
     </>
   );
-}
+
+};
 
 export default Layout;
