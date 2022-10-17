@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const URL = "http://localhost:3001/comments";
+const URL = "http://localhost:3003/comments";
 
 export const __getComments = createAsyncThunk(
   "comments/getComments",
