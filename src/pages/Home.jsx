@@ -1,7 +1,15 @@
 import React from "react";
+import Layout from "../components/ui/Layout";
+import WritingForm from "../components/WritingForm";
+import FeedList from "../components/FeedList";
 
-function Home() {
-  return <></>;
+const Home = () => {
+  return(
+    <Layout>
+      <WritingForm />
+      <FeedList />
+    </Layout>
+  )
 }
 
 export default Home;
